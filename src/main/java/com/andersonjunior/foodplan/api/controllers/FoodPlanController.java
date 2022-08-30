@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.andersonjunior.foodplan.domain.models.FoodGroup;
 import com.andersonjunior.foodplan.domain.models.FoodPlan;
 import com.andersonjunior.foodplan.service.services.FoodPlanService;
 
@@ -42,6 +43,13 @@ public class FoodPlanController {
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
             List<FoodPlan> foodPlans = foodPlanService.findAll(page, size);
             return ResponseEntity.ok().body(foodPlans);
+    }
+
+    @GetMapping(value = "/foodGroup")
+    public ResponseEntity<List<FoodPlan>> findByFoodGroup(
+        @RequestParam(name = "value", required = true) FoodGroup foodGroup) {
+        List<FoodPlan> foodPlans = foodPlanService.findByFoodGroup(foodGroup);
+        return ResponseEntity.ok().body(foodPlans);
     }
 
     @PostMapping

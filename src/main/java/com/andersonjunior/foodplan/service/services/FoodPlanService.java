@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.andersonjunior.foodplan.domain.models.FoodGroup;
 import com.andersonjunior.foodplan.domain.models.FoodPlan;
 import com.andersonjunior.foodplan.domain.repositories.FoodPlanRepository;
 import com.andersonjunior.foodplan.service.exceptions.DataIntegrityException;
@@ -31,6 +32,10 @@ public class FoodPlanService {
     public FoodPlan findById(Long id) {
         Optional<FoodPlan> user = foodPlanRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado na base de dados"));
+    }
+
+    public List<FoodPlan> findByFoodGroup(FoodGroup foodGroup) {
+        return foodPlanRepository.findByFoodGroup(foodGroup);
     }
 
     @Transactional
