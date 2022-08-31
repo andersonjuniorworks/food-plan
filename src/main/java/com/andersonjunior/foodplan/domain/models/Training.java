@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -18,27 +17,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FoodPlan implements Serializable {
-    
+public class Training implements Serializable {
+
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "food_group_id")
-    private FoodGroup foodGroup;
 
-    private String title;
-    private String subtitle;
+    @OneToOne
+    private TrainingGroup trainingGroup;
+
+    @OneToOne
+    private Student student;
+    
     private String description;
-    private String observation;
+    private String range;
+    private String repeat;
+    private String interval;
+    private String cadence;
+    private String weight;
+    private String method;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
@@ -51,5 +55,5 @@ public class FoodPlan implements Serializable {
     protected void onUpdate() {
         this.updateAt = LocalDateTime.now();
     }
-
+    
 }

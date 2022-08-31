@@ -30,8 +30,8 @@ public class FoodPlanService {
     }
 
     public FoodPlan findById(Long id) {
-        Optional<FoodPlan> user = foodPlanRepository.findById(id);
-        return user.orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado na base de dados"));
+        Optional<FoodPlan> foodPlan = foodPlanRepository.findById(id);
+        return foodPlan.orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado na base de dados"));
     }
 
     public List<FoodPlan> findByFoodGroup(FoodGroup foodGroup) {
@@ -39,15 +39,15 @@ public class FoodPlanService {
     }
 
     @Transactional
-    public FoodPlan insert(FoodPlan user) {
-        user.setId(null);
-        return foodPlanRepository.save(user);
+    public FoodPlan insert(FoodPlan foodPlan) {
+        foodPlan.setId(null);
+        return foodPlanRepository.save(foodPlan);
     }
 
     @Transactional
-    public FoodPlan update(FoodPlan user) {
-        FoodPlan newFoodPlan = findById(user.getId());
-        updateData(newFoodPlan, user);
+    public FoodPlan update(FoodPlan foodPlan) {
+        FoodPlan newFoodPlan = findById(foodPlan.getId());
+        updateData(newFoodPlan, foodPlan);
         return foodPlanRepository.save(newFoodPlan);
     }
 

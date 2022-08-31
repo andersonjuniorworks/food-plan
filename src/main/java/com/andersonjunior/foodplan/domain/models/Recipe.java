@@ -3,12 +3,12 @@ package com.andersonjunior.foodplan.domain.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -18,27 +18,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FoodPlan implements Serializable {
-    
+public class Recipe implements Serializable {
+
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "food_group_id")
-    private FoodGroup foodGroup;
-
     private String title;
     private String subtitle;
-    private String description;
-    private String observation;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String content;
+
+    private String tag;
+
+    @OneToOne
+    private User author;
+
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
@@ -51,5 +53,5 @@ public class FoodPlan implements Serializable {
     protected void onUpdate() {
         this.updateAt = LocalDateTime.now();
     }
-
+    
 }

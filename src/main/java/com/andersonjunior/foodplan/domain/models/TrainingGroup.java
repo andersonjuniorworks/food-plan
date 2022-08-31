@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -18,27 +16,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FoodPlan implements Serializable {
+public class TrainingGroup implements Serializable {
     
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "food_group_id")
-    private FoodGroup foodGroup;
-
-    private String title;
-    private String subtitle;
-    private String description;
-    private String observation;
+    private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 

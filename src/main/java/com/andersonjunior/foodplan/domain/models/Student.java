@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+
+import com.andersonjunior.foodplan.domain.enums.Gender;
+import com.andersonjunior.foodplan.domain.enums.Intensity;
+import com.andersonjunior.foodplan.domain.enums.Scheme;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -18,27 +21,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FoodPlan implements Serializable {
-    
+public class Student implements Serializable {
+
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "food_group_id")
-    private FoodGroup foodGroup;
+    @OneToOne
+    private User user;
 
-    private String title;
-    private String subtitle;
-    private String description;
-    private String observation;
+    private Integer age;
+    private LocalDateTime birthDate;
+
+    private Gender gender;
+    private Intensity intensity;
+    private Scheme scheme;
+
+    private String objective;
+
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 

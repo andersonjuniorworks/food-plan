@@ -29,20 +29,20 @@ public class FoodGroupService {
     }
 
     public FoodGroup findById(Long id) {
-        Optional<FoodGroup> user = foodGroupRepository.findById(id);
-        return user.orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado na base de dados"));
+        Optional<FoodGroup> foodGroup = foodGroupRepository.findById(id);
+        return foodGroup.orElseThrow(() -> new ObjectNotFoundException("Registro não encontrado na base de dados"));
     }
 
     @Transactional
-    public FoodGroup insert(FoodGroup user) {
-        user.setId(null);
-        return foodGroupRepository.save(user);
+    public FoodGroup insert(FoodGroup foodGroup) {
+        foodGroup.setId(null);
+        return foodGroupRepository.save(foodGroup);
     }
 
     @Transactional
-    public FoodGroup update(FoodGroup user) {
-        FoodGroup newUser = findById(user.getId());
-        updateData(newUser, user);
+    public FoodGroup update(FoodGroup foodGroup) {
+        FoodGroup newUser = findById(foodGroup.getId());
+        updateData(newUser, foodGroup);
         return foodGroupRepository.save(newUser);
     }
 
