@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.andersonjunior.foodplan.domain.models.Training;
+import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.domain.repositories.TrainingRepository;
 import com.andersonjunior.foodplan.service.exceptions.DataIntegrityException;
 import com.andersonjunior.foodplan.service.exceptions.ObjectNotFoundException;
@@ -57,12 +58,10 @@ public class TrainingService {
     }
 
     private void updateData(Training newTraining, Training training) {
-        newTraining.setStudent(training.getStudent());
-        newTraining.setTrainingGroup(training.getTrainingGroup());  
         newTraining.setDescription(training.getDescription());
-        newTraining.setRange(training.getRange());
+        newTraining.setSeries(training.getSeries());
         newTraining.setRepeat(training.getRepeat());
-        newTraining.setInterval(training.getInterval());
+        newTraining.setRepose(training.getRepose());
         newTraining.setWeight(training.getWeight());
         newTraining.setMethod(training.getMethod());
         newTraining.setCadence(training.getCadence());

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.andersonjunior.foodplan.domain.dtos.LoginDto;
 import com.andersonjunior.foodplan.domain.models.User;
 import com.andersonjunior.foodplan.service.services.UserService;
 
@@ -44,6 +46,20 @@ public class UserController {
             return ResponseEntity.ok().body(users);
     }
 
+    @GetMapping(value = "/email")
+    public ResponseEntity<User> findByEmail(
+        @RequestParam(name = "value", required = true) String email) {
+        User user = userService.findByEmail(email);
+        return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping(value = "/name")
+    public ResponseEntity<List<User>> findByName(
+        @RequestParam(name = "value", required = true) String name) {
+        List<User> user = userService.findByName(name);
+        return ResponseEntity.ok().body(user);
+    }
+
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody User user) {
         userService.insert(user);
@@ -62,6 +78,17 @@ public class UserController {
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<Boolean> login(@Valid @RequestBody LoginDto loginDto) {
+
+        boolean valid = userService.login(loginDto.getEmail(), loginDto.getPassword());
+
+        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+
+        return ResponseEntity.status(status).build();
+
     }
 
 }

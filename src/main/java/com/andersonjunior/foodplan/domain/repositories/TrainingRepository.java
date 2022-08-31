@@ -7,5 +7,5 @@ import com.andersonjunior.foodplan.domain.models.Training;
 
 @Repository
 public interface TrainingRepository extends JpaRepository<Training, Long> {
-    
+
 }

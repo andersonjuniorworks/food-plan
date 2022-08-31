@@ -15,7 +15,6 @@ import com.andersonjunior.foodplan.domain.enums.Gender;
 import com.andersonjunior.foodplan.domain.enums.Intensity;
 import com.andersonjunior.foodplan.domain.enums.Scheme;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,6 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Student implements Serializable {
@@ -33,9 +31,9 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @OneToOne
-    private User user;
+    private User access;
 
     private Integer age;
     private LocalDateTime birthDate;
@@ -57,6 +55,18 @@ public class Student implements Serializable {
     @PreUpdate
     protected void onUpdate() {
         this.updateAt = LocalDateTime.now();
+    }
+
+    public Student(Long id, User access, Integer age, LocalDateTime birthDate, Gender gender, Intensity intensity,
+            Scheme scheme, String objective) {
+        this.id = id;
+        this.access = access;
+        this.age = age;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.intensity = intensity;
+        this.scheme = scheme;
+        this.objective = objective;
     }
 
 }
