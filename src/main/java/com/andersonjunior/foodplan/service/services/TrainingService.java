@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.andersonjunior.foodplan.domain.models.Training;
-import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.domain.repositories.TrainingRepository;
 import com.andersonjunior.foodplan.service.exceptions.DataIntegrityException;
 import com.andersonjunior.foodplan.service.exceptions.ObjectNotFoundException;
