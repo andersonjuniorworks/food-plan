@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.service.services.TrainingGroupService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/trainingGroups")
 public class TrainingGroupController {
@@ -30,12 +32,14 @@ public class TrainingGroupController {
         this.trainingGroupService = trainingGroupService;
     }
 
+    @ApiOperation(value = "Busca um grupo por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<TrainingGroup> findById(@PathVariable Long id) {
         TrainingGroup trainingGroup = trainingGroupService.findById(id);
         return ResponseEntity.ok().body(trainingGroup);
     }
 
+    @ApiOperation(value = "Lista todos os grupos de treinos")
     @GetMapping
     public ResponseEntity<List<TrainingGroup>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -44,6 +48,7 @@ public class TrainingGroupController {
             return ResponseEntity.ok().body(trainingGroups);
     }
 
+    @ApiOperation(value = "Insere um novo grupo de treinos")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody TrainingGroup trainingGroup) {
         trainingGroupService.insert(trainingGroup);
@@ -52,12 +57,14 @@ public class TrainingGroupController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita um grupo de treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody TrainingGroup trainingGroup, @PathVariable Long id) {
         trainingGroupService.update(trainingGroup);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um grupo de treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         trainingGroupService.delete(id);

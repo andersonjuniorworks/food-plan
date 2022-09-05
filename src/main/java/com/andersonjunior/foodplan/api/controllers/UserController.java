@@ -22,6 +22,8 @@ import com.andersonjunior.foodplan.domain.dtos.LoginDto;
 import com.andersonjunior.foodplan.domain.models.User;
 import com.andersonjunior.foodplan.service.services.UserService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController {
@@ -32,12 +34,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return ResponseEntity.ok().body(user);
-    }
-
+    @ApiOperation(value = "Lista todos os usuários")
     @GetMapping
     public ResponseEntity<List<User>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -46,6 +43,14 @@ public class UserController {
             return ResponseEntity.ok().body(users);
     }
 
+    @ApiOperation(value = "Buscar usuário por ID")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user);
+    }
+
+    @ApiOperation(value = "Buscar usuário por email")
     @GetMapping(value = "/email")
     public ResponseEntity<User> findByEmail(
         @RequestParam(name = "value", required = true) String email) {
@@ -53,6 +58,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @ApiOperation(value = "Buscar usuário por nome")
     @GetMapping(value = "/name")
     public ResponseEntity<List<User>> findByName(
         @RequestParam(name = "value", required = true) String name) {
@@ -60,6 +66,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @ApiOperation(value = "Insere um novo usuário")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody User user) {
         userService.insert(user);
@@ -68,18 +75,21 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita um usuário")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody User user, @PathVariable Long id) {
         userService.update(user);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um usuário")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Login do usuário")
     @PostMapping(value = "/login")
     public ResponseEntity<Boolean> login(@Valid @RequestBody LoginDto loginDto) {
 

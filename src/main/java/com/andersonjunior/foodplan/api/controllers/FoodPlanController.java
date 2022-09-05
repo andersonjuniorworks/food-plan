@@ -21,6 +21,8 @@ import com.andersonjunior.foodplan.domain.models.FoodGroup;
 import com.andersonjunior.foodplan.domain.models.FoodPlan;
 import com.andersonjunior.foodplan.service.services.FoodPlanService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/foodPlans")
 public class FoodPlanController {
@@ -31,12 +33,14 @@ public class FoodPlanController {
         this.foodPlanService = foodPlanService;
     }
 
+    @ApiOperation(value = "Buscar um plano alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodPlan> findById(@PathVariable Long id) {
         FoodPlan foodPlan = foodPlanService.findById(id);
         return ResponseEntity.ok().body(foodPlan);
     }
 
+    @ApiOperation(value = "Lista todos os planos alimentares")
     @GetMapping
     public ResponseEntity<List<FoodPlan>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -45,6 +49,7 @@ public class FoodPlanController {
             return ResponseEntity.ok().body(foodPlans);
     }
 
+    @ApiOperation(value = "Lista todos os planos alimentares por grupo")
     @GetMapping(value = "/foodGroup")
     public ResponseEntity<List<FoodPlan>> findByFoodGroup(
         @RequestParam(name = "value", required = true) FoodGroup foodGroup) {
@@ -52,6 +57,7 @@ public class FoodPlanController {
         return ResponseEntity.ok().body(foodPlans);
     }
 
+    @ApiOperation(value = "Insere um novo plano alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodPlan foodPlan) {
         foodPlanService.insert(foodPlan);
@@ -60,12 +66,14 @@ public class FoodPlanController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita um plano alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodPlan foodPlan, @PathVariable Long id) {
         foodPlanService.update(foodPlan);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um plano alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         foodPlanService.delete(id);

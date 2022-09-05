@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.andersonjunior.foodplan.domain.models.Student;
 import com.andersonjunior.foodplan.service.services.StudentService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/students")
 public class StudentController {
@@ -30,12 +32,14 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @ApiOperation(value = "Lista um aluno por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student student = studentService.findById(id);
         return ResponseEntity.ok().body(student);
     }
 
+    @ApiOperation(value = "Lista todos os aluno")
     @GetMapping
     public ResponseEntity<List<Student>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -44,6 +48,7 @@ public class StudentController {
             return ResponseEntity.ok().body(students);
     }
 
+    @ApiOperation(value = "Insere um novo aluno")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Student student) {
         studentService.insert(student);
@@ -52,12 +57,14 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita um aluno")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Student student, @PathVariable Long id) {
         studentService.update(student);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um aluno")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         studentService.delete(id);

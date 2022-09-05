@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.andersonjunior.foodplan.domain.models.FoodGroup;
 import com.andersonjunior.foodplan.service.services.FoodGroupService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/foodGroups")
 public class FoodGroupController {
@@ -30,12 +32,14 @@ public class FoodGroupController {
         this.foodGroupService = foodGroupService;
     }
 
+    @ApiOperation(value = "Buscar um grupo alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodGroup> findById(@PathVariable Long id) {
         FoodGroup foodGroup = foodGroupService.findById(id);
         return ResponseEntity.ok().body(foodGroup);
     }
 
+    @ApiOperation(value = "Lista todos os grupos alimentares")
     @GetMapping
     public ResponseEntity<List<FoodGroup>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -44,6 +48,7 @@ public class FoodGroupController {
             return ResponseEntity.ok().body(foodGroups);
     }
 
+    @ApiOperation(value = "Insere um novo grupo alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodGroup foodGroup) {
         foodGroupService.insert(foodGroup);
@@ -52,12 +57,14 @@ public class FoodGroupController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita um grupo alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodGroup foodGroup, @PathVariable Long id) {
         foodGroupService.update(foodGroup);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um grupo alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         foodGroupService.delete(id);
