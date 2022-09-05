@@ -10,7 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.andersonjunior.foodplan.service.services.DBService;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@EnableSwagger2
 public class FoodplanApplication implements CommandLineRunner {
 
 	private final DBService dbService;

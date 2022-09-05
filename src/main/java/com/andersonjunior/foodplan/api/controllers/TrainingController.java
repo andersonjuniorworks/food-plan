@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.andersonjunior.foodplan.domain.models.Training;
-import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.service.services.TrainingService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/trainings")
@@ -31,12 +32,14 @@ public class TrainingController {
         this.trainingService = trainingService;
     }
 
+    @ApiOperation(value = "Lista um treino por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Training> findById(@PathVariable Long id) {
         Training training = trainingService.findById(id);
         return ResponseEntity.ok().body(training);
     }
 
+    @ApiOperation(value = "Lista todos os treinos")
     @GetMapping
     public ResponseEntity<List<Training>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -45,6 +48,7 @@ public class TrainingController {
             return ResponseEntity.ok().body(trainings);
     }
 
+    @ApiOperation(value = "Insere um novo treino")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Training training) {
         trainingService.insert(training);
@@ -53,12 +57,14 @@ public class TrainingController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Editar um treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Training training, @PathVariable Long id) {
         trainingService.update(training);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui um treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         trainingService.delete(id);

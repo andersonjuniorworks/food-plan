@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.andersonjunior.foodplan.domain.models.Recipe;
 import com.andersonjunior.foodplan.service.services.RecipeService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/api/recipes")
 public class RecipeController {
@@ -30,12 +32,14 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @ApiOperation(value = "Lista uma receita por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Recipe> findById(@PathVariable Long id) {
         Recipe recipe = recipeService.findById(id);
         return ResponseEntity.ok().body(recipe);
     }
 
+    @ApiOperation(value = "Lista todos as receitas")
     @GetMapping
     public ResponseEntity<List<Recipe>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
@@ -44,6 +48,7 @@ public class RecipeController {
             return ResponseEntity.ok().body(recipes);
     }
 
+    @ApiOperation(value = "Insere uma nova receita")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Recipe recipe) {
         recipeService.insert(recipe);
@@ -52,12 +57,14 @@ public class RecipeController {
         return ResponseEntity.created(uri).build();
     }
 
+    @ApiOperation(value = "Edita uma receita")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Recipe recipe, @PathVariable Long id) {
         recipeService.update(recipe);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Exclui uma receita")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
         recipeService.delete(id);
