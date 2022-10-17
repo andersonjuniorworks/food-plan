@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.andersonjunior.foodplan.domain.models.Role;
 import com.andersonjunior.foodplan.domain.models.User;
 import com.andersonjunior.foodplan.service.services.UserService;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,22 +34,4 @@ public class UserController {
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
-    @PostMapping(value = "/role/save")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
-    }
-
-    @PostMapping(value = "/role/addRoleToUser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
-        userService.addRoleToUser(form.getEmail(), form.getRoleName());
-        return ResponseEntity.ok().build();
-    }
-
-}
-
-@Data
-class RoleToUserForm {
-    private String email;
-    private String roleName;
 }

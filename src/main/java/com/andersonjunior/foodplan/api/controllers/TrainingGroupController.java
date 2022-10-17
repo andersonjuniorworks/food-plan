@@ -35,7 +35,7 @@ public class TrainingGroupController {
     @ApiOperation(value = "Busca um grupo por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<TrainingGroup> findById(@PathVariable Long id) {
-        TrainingGroup trainingGroup = trainingGroupService.findById(id);
+        TrainingGroup trainingGroup = trainingGroupService.getTrainingGroupById(id);
         return ResponseEntity.ok().body(trainingGroup);
     }
 
@@ -44,14 +44,14 @@ public class TrainingGroupController {
     public ResponseEntity<List<TrainingGroup>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<TrainingGroup> trainingGroups = trainingGroupService.findAll(page, size);
+            List<TrainingGroup> trainingGroups = trainingGroupService.getTrainingGroups(page, size);
             return ResponseEntity.ok().body(trainingGroups);
     }
 
     @ApiOperation(value = "Insere um novo grupo de treinos")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody TrainingGroup trainingGroup) {
-        trainingGroupService.insert(trainingGroup);
+        trainingGroupService.saveTrainingGroup(trainingGroup);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(trainingGroup.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -60,14 +60,14 @@ public class TrainingGroupController {
     @ApiOperation(value = "Edita um grupo de treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody TrainingGroup trainingGroup, @PathVariable Long id) {
-        trainingGroupService.update(trainingGroup);
+        trainingGroupService.saveTrainingGroup(trainingGroup);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui um grupo de treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        trainingGroupService.delete(id);
+        trainingGroupService.deleteTrainingGroup(id);
         return ResponseEntity.noContent().build();
     }
 

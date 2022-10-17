@@ -36,7 +36,7 @@ public class FoodPlanController {
     @ApiOperation(value = "Buscar um plano alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodPlan> findById(@PathVariable Long id) {
-        FoodPlan foodPlan = foodPlanService.findById(id);
+        FoodPlan foodPlan = foodPlanService.getFoodPlanById(id);
         return ResponseEntity.ok().body(foodPlan);
     }
 
@@ -45,7 +45,7 @@ public class FoodPlanController {
     public ResponseEntity<List<FoodPlan>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<FoodPlan> foodPlans = foodPlanService.findAll(page, size);
+            List<FoodPlan> foodPlans = foodPlanService.getAllFoodPlan(page, size);
             return ResponseEntity.ok().body(foodPlans);
     }
 
@@ -53,14 +53,14 @@ public class FoodPlanController {
     @GetMapping(value = "/foodGroup")
     public ResponseEntity<List<FoodPlan>> findByFoodGroup(
         @RequestParam(name = "value", required = true) FoodGroup foodGroup) {
-        List<FoodPlan> foodPlans = foodPlanService.findByFoodGroup(foodGroup);
+        List<FoodPlan> foodPlans = foodPlanService.getFoodPlanByFoodGroup(foodGroup);
         return ResponseEntity.ok().body(foodPlans);
     }
 
     @ApiOperation(value = "Insere um novo plano alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodPlan foodPlan) {
-        foodPlanService.insert(foodPlan);
+        foodPlanService.saveFoodPlan(foodPlan);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(foodPlan.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -69,14 +69,14 @@ public class FoodPlanController {
     @ApiOperation(value = "Edita um plano alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodPlan foodPlan, @PathVariable Long id) {
-        foodPlanService.update(foodPlan);
+        foodPlanService.saveFoodPlan(foodPlan);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui um plano alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        foodPlanService.delete(id);
+        foodPlanService.deleteFoodPlan(id);
         return ResponseEntity.noContent().build();
     }
 

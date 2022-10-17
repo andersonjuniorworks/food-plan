@@ -35,7 +35,7 @@ public class StudentController {
     @ApiOperation(value = "Lista um aluno por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
-        Student student = studentService.findById(id);
+        Student student = studentService.getStudentById(id);
         return ResponseEntity.ok().body(student);
     }
 
@@ -44,14 +44,14 @@ public class StudentController {
     public ResponseEntity<List<Student>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<Student> students = studentService.findAll(page, size);
+            List<Student> students = studentService.getStudents(page, size);
             return ResponseEntity.ok().body(students);
     }
 
     @ApiOperation(value = "Insere um novo aluno")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Student student) {
-        studentService.insert(student);
+        studentService.saveStudent(student);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(student.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -60,14 +60,14 @@ public class StudentController {
     @ApiOperation(value = "Edita um aluno")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Student student, @PathVariable Long id) {
-        studentService.update(student);
+        studentService.saveStudent(student);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui um aluno")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        studentService.delete(id);
+        studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
     }
 

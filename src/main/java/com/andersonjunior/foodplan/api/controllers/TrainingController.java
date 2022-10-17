@@ -35,7 +35,7 @@ public class TrainingController {
     @ApiOperation(value = "Lista um treino por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Training> findById(@PathVariable Long id) {
-        Training training = trainingService.findById(id);
+        Training training = trainingService.getTrainingById(id);
         return ResponseEntity.ok().body(training);
     }
 
@@ -44,14 +44,14 @@ public class TrainingController {
     public ResponseEntity<List<Training>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<Training> trainings = trainingService.findAll(page, size);
+            List<Training> trainings = trainingService.getTrainings(page, size);
             return ResponseEntity.ok().body(trainings);
     }
 
     @ApiOperation(value = "Insere um novo treino")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Training training) {
-        trainingService.insert(training);
+        trainingService.saveTraining(training);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(training.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -60,14 +60,14 @@ public class TrainingController {
     @ApiOperation(value = "Editar um treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Training training, @PathVariable Long id) {
-        trainingService.update(training);
+        trainingService.saveTraining(training);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui um treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        trainingService.delete(id);
+        trainingService.deleteTraining(id);
         return ResponseEntity.noContent().build();
     }
 

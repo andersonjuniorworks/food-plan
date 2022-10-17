@@ -35,7 +35,7 @@ public class RecipeController {
     @ApiOperation(value = "Lista uma receita por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Recipe> findById(@PathVariable Long id) {
-        Recipe recipe = recipeService.findById(id);
+        Recipe recipe = recipeService.getRecipeById(id);
         return ResponseEntity.ok().body(recipe);
     }
 
@@ -44,14 +44,14 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<Recipe> recipes = recipeService.findAll(page, size);
+            List<Recipe> recipes = recipeService.getRecipes(page, size);
             return ResponseEntity.ok().body(recipes);
     }
 
     @ApiOperation(value = "Insere uma nova receita")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Recipe recipe) {
-        recipeService.insert(recipe);
+        recipeService.saveRecipe(recipe);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(recipe.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -60,14 +60,14 @@ public class RecipeController {
     @ApiOperation(value = "Edita uma receita")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Recipe recipe, @PathVariable Long id) {
-        recipeService.update(recipe);
+        recipeService.saveRecipe(recipe);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui uma receita")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        recipeService.delete(id);
+        recipeService.deleteRecipe(id);
         return ResponseEntity.noContent().build();
     }
 
