@@ -21,21 +21,19 @@ import com.andersonjunior.foodplan.domain.models.FoodGroup;
 import com.andersonjunior.foodplan.service.services.FoodGroupService;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(value = "/api/foodGroups")
+@RequiredArgsConstructor
 public class FoodGroupController {
     
     private final FoodGroupService foodGroupService;
 
-    public FoodGroupController(FoodGroupService foodGroupService) {
-        this.foodGroupService = foodGroupService;
-    }
-
     @ApiOperation(value = "Buscar um grupo alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodGroup> findById(@PathVariable Long id) {
-        FoodGroup foodGroup = foodGroupService.findById(id);
+        FoodGroup foodGroup = foodGroupService.getFoodGroupById(id);
         return ResponseEntity.ok().body(foodGroup);
     }
 
@@ -44,14 +42,14 @@ public class FoodGroupController {
     public ResponseEntity<List<FoodGroup>> findAll(
         @RequestParam(name = "page", required = true, defaultValue = "0") Integer page,
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
-            List<FoodGroup> foodGroups = foodGroupService.findAll(page, size);
+            List<FoodGroup> foodGroups = foodGroupService.getFoodGroups(page, size);
             return ResponseEntity.ok().body(foodGroups);
     }
 
     @ApiOperation(value = "Insere um novo grupo alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodGroup foodGroup) {
-        foodGroupService.insert(foodGroup);
+        foodGroupService.saveFoodGroup(foodGroup);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(foodGroup.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -60,14 +58,14 @@ public class FoodGroupController {
     @ApiOperation(value = "Edita um grupo alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodGroup foodGroup, @PathVariable Long id) {
-        foodGroupService.update(foodGroup);
+        foodGroupService.saveFoodGroup(foodGroup);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Exclui um grupo alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
-        foodGroupService.delete(id);
+        foodGroupService.deleteFoodGroup(id);
         return ResponseEntity.noContent().build();
     }
 
