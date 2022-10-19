@@ -1,40 +1,16 @@
 package com.andersonjunior.foodplan;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.andersonjunior.foodplan.service.services.DBService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication //(exclude = { SecurityAutoConfiguration.class })
 @EnableSwagger2
-public class FoodplanApplication implements CommandLineRunner {
-
-	private final DBService dbService;
-
-	public FoodplanApplication(DBService dbService) {
-		this.dbService = dbService;
-	}
+public class FoodplanApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FoodplanApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		dbService.instantiateTestDatabase();
-	}
-
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
 	}
 
 }
