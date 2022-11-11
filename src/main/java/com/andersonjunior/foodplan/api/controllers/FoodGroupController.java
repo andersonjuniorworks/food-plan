@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class FoodGroupController {
     
     private final FoodGroupService foodGroupService;
 
+    @CrossOrigin
     @ApiOperation(value = "Buscar um grupo alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodGroup> findById(@PathVariable Long id) {
@@ -37,6 +39,7 @@ public class FoodGroupController {
         return ResponseEntity.ok().body(foodGroup);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os grupos alimentares")
     @GetMapping
     public ResponseEntity<List<FoodGroup>> findAll(
@@ -46,6 +49,7 @@ public class FoodGroupController {
             return ResponseEntity.ok().body(foodGroups);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere um novo grupo alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodGroup foodGroup) {
@@ -55,6 +59,7 @@ public class FoodGroupController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Edita um grupo alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodGroup foodGroup, @PathVariable Long id) {
@@ -62,6 +67,7 @@ public class FoodGroupController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui um grupo alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {

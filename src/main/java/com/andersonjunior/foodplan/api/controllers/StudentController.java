@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista um aluno por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
@@ -39,6 +41,7 @@ public class StudentController {
         return ResponseEntity.ok().body(student);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os aluno")
     @GetMapping
     public ResponseEntity<List<Student>> findAll(
@@ -48,6 +51,7 @@ public class StudentController {
             return ResponseEntity.ok().body(students);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere um novo aluno")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Student student) {
@@ -57,6 +61,7 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Edita um aluno")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Student student, @PathVariable Long id) {
@@ -64,6 +69,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui um aluno")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {

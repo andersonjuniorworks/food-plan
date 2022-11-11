@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +24,13 @@ public class UserController {
     
     private final UserService userService;
 
+    @CrossOrigin
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @CrossOrigin
     @PostMapping(value = "/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toString());
