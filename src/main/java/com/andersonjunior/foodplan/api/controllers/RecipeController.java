@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista uma receita por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Recipe> findById(@PathVariable Long id) {
@@ -39,6 +41,7 @@ public class RecipeController {
         return ResponseEntity.ok().body(recipe);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos as receitas")
     @GetMapping
     public ResponseEntity<List<Recipe>> findAll(
@@ -48,6 +51,7 @@ public class RecipeController {
             return ResponseEntity.ok().body(recipes);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere uma nova receita")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Recipe recipe) {
@@ -57,6 +61,7 @@ public class RecipeController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Edita uma receita")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Recipe recipe, @PathVariable Long id) {
@@ -64,6 +69,7 @@ public class RecipeController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui uma receita")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {

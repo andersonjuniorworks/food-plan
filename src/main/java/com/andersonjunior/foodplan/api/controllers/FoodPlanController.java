@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class FoodPlanController {
         this.foodPlanService = foodPlanService;
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Buscar um plano alimentar por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FoodPlan> findById(@PathVariable Long id) {
@@ -40,6 +42,7 @@ public class FoodPlanController {
         return ResponseEntity.ok().body(foodPlan);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os planos alimentares")
     @GetMapping
     public ResponseEntity<List<FoodPlan>> findAll(
@@ -49,6 +52,7 @@ public class FoodPlanController {
             return ResponseEntity.ok().body(foodPlans);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os planos alimentares por grupo")
     @GetMapping(value = "/foodGroup")
     public ResponseEntity<List<FoodPlan>> findByFoodGroup(
@@ -57,6 +61,7 @@ public class FoodPlanController {
         return ResponseEntity.ok().body(foodPlans);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere um novo plano alimentar")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody FoodPlan foodPlan) {
@@ -66,6 +71,7 @@ public class FoodPlanController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Edita um plano alimentar")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody FoodPlan foodPlan, @PathVariable Long id) {
@@ -73,6 +79,7 @@ public class FoodPlanController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui um plano alimentar")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {

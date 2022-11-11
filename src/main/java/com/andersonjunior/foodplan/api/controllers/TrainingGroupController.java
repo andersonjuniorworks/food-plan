@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class TrainingGroupController {
         this.trainingGroupService = trainingGroupService;
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Busca um grupo por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<TrainingGroup> findById(@PathVariable Long id) {
@@ -39,6 +41,7 @@ public class TrainingGroupController {
         return ResponseEntity.ok().body(trainingGroup);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os grupos de treinos")
     @GetMapping
     public ResponseEntity<List<TrainingGroup>> findAll(
@@ -48,6 +51,7 @@ public class TrainingGroupController {
             return ResponseEntity.ok().body(trainingGroups);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere um novo grupo de treinos")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody TrainingGroup trainingGroup) {
@@ -57,6 +61,7 @@ public class TrainingGroupController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Edita um grupo de treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody TrainingGroup trainingGroup, @PathVariable Long id) {
@@ -64,6 +69,7 @@ public class TrainingGroupController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui um grupo de treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {

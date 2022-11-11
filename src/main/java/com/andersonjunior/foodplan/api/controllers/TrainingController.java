@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class TrainingController {
         this.trainingService = trainingService;
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista um treino por ID")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Training> findById(@PathVariable Long id) {
@@ -39,6 +41,7 @@ public class TrainingController {
         return ResponseEntity.ok().body(training);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Lista todos os treinos")
     @GetMapping
     public ResponseEntity<List<Training>> findAll(
@@ -48,6 +51,7 @@ public class TrainingController {
             return ResponseEntity.ok().body(trainings);
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Insere um novo treino")
     @PostMapping
     public ResponseEntity<String> insert(@Valid @RequestBody Training training) {
@@ -57,6 +61,7 @@ public class TrainingController {
         return ResponseEntity.created(uri).build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Editar um treino")
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> update(@Valid @RequestBody Training training, @PathVariable Long id) {
@@ -64,6 +69,7 @@ public class TrainingController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @ApiOperation(value = "Exclui um treino")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@Valid @PathVariable Long id) {
