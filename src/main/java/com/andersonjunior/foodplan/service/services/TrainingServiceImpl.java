@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.andersonjunior.foodplan.domain.models.Training;
+import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.domain.repositories.TrainingRepository;
 import com.andersonjunior.foodplan.service.exceptions.DataIntegrityException;
 import com.andersonjunior.foodplan.service.exceptions.ObjectNotFoundException;
@@ -54,6 +55,12 @@ public class TrainingServiceImpl implements TrainingService {
         } catch (DataIntegrityException e) {
             throw new DataIntegrityException("Não é possível excluir este treino!");
         } 
+    }
+
+    @Override
+    public List<Training> getTrainingByGroup(TrainingGroup trainingGroup) {
+        log.info("Listando todos os treinos por grupo");
+        return trainingRepository.findByTrainingGroup(trainingGroup);
     }
     
 }
