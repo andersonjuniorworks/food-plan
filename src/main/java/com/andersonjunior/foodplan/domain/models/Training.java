@@ -2,19 +2,13 @@ package com.andersonjunior.foodplan.domain.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,10 +27,8 @@ public class Training implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "trainings_groups", joinColumns = @JoinColumn(name = "training_id"), inverseJoinColumns = @JoinColumn(name = "training_group_id"))
-    private List<TrainingGroup> trainingGroups;
+    @OneToOne
+    private TrainingGroup trainingGroup;
 
     private String description;
     private String series;

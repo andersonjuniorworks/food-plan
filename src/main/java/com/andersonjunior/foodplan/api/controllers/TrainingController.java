@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.andersonjunior.foodplan.domain.models.Training;
+import com.andersonjunior.foodplan.domain.models.TrainingGroup;
 import com.andersonjunior.foodplan.service.services.TrainingService;
 
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,16 @@ public class TrainingController {
         @RequestParam(name = "size", required = true, defaultValue = "50") Integer size) {
             List<Training> trainings = trainingService.getTrainings(page, size);
             return ResponseEntity.ok().body(trainings);
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "Lista todos os treinos por grupo")
+    @GetMapping(value = "/group")
+    public ResponseEntity<List<Training>> findByTrainingGroup(
+        @RequestParam(name = "trainingGroup", required = true) TrainingGroup trainingGroup
+    ) {
+        List<Training> trainings = trainingService.getTrainingByGroup(trainingGroup);
+        return ResponseEntity.ok().body(trainings);
     }
 
     @CrossOrigin
